@@ -23,7 +23,7 @@ jobs:
 
       - name: Add server to known_hosts
         run: |
-          ssh-keyscan -H server_ip >> ~/.ssh/known_hosts
+          ssh-keyscan -H 3.110.152.19 >> ~/.ssh/known_hosts
 
       - name: Deploy code to server
         run: |
