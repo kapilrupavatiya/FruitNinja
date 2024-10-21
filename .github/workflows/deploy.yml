@@ -32,4 +32,4 @@ jobs:
 
       - name: Restart services
         run: |
-          ssh awaazde@chat.awaaz.de "sudo service uwsgi restart && sudo systemctl restart uwsgi-cai"
+          ssh awaazde@chat.awaaz.de "echo ${{ secrets.SUDO_PASSWORD }} | sudo -S service uwsgi restart && sudo -S systemctl restart uwsgi-cai"
