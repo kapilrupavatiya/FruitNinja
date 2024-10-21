@@ -1,0 +1,30 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Install SSH client
+        run: sudo apt-get install openssh-client
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy code to server
+        run: |
+          ssh awaazde@chat.awaaz.de "cd /home/awaazde/www/FruitNinja/ && git pull origin master"
+
+      - name: Restart services
+        run: |
+          ssh awaazde@chat.awaaz.de "sudo service uwsgi restart && sudo systemctl restart uwsgi-cai"
